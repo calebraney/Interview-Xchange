@@ -173,7 +173,9 @@ gsap.to("#cursor", {
         //functional interactions
         lenis = initLenis();
         hoverActive(gsapContext);
-        horizontal(gsapContext, lenis);
+        if (!isMobile) {
+          horizontal(gsapContext, lenis);
+        }
         cursor(gsapContext);
         load(gsapContext);
         //conditional interactions
