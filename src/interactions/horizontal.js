@@ -1,5 +1,5 @@
 import { attr, checkBreakpoints } from '../utilities';
-export const horizontal = function (gsapContext) {
+export const horizontal = function (gsapContext, lenis) {
   //animation ID
   const ANIMATION_ID = 'horizontal';
   //selectors
@@ -8,7 +8,7 @@ export const horizontal = function (gsapContext) {
   const TRACK_SELECTOR = '[data-ix-horizontal="track"]';
 
   //options
-  const OPTION_MATCH_HEIGHT = 'data-ix-horizontal-start';
+  const OPTION_MATCH_HEIGHT = 'data-ix-horizontal-dynamic-height';
 
   //elements
   const sections = document.querySelectorAll(WRAP_SELECTOR);
@@ -26,12 +26,13 @@ export const horizontal = function (gsapContext) {
     // function to set section height
     const setScrollDistance = function () {
       wrap.style.height = 'calc(' + track.offsetWidth + 'px + 100vh)';
+      ScrollTrigger.refresh();
+      if (lenis) lenis.resize();
     };
     //get option to see if height is matched
     let matchHeight = attr(true, wrap.getAttribute(OPTION_MATCH_HEIGHT));
     if (matchHeight) {
       setScrollDistance();
-      ScrollTrigger.refresh();
       window.addEventListener('resize', setScrollDistance);
     }
 

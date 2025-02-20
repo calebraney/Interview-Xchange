@@ -3,15 +3,24 @@ import { attr, checkBreakpoints } from '../utilities';
 /*
 CSS to include
 can also use pointer to check for non fine pointers
-@media not all and (pointer: fine) {
 
-@media (hover: none) {
- .cursor {
-    pointer-events: none;
-    display: none;
-  }
-}
-*/
+// /* Cursor - Fade out when not hovering on body */
+// body:hover .cursor_component {opacity:1;}
+// body:has(.cursor_component) {cursor: none;}
+// /*hide default cursor*/
+// body:has(.cursor_component) :is(button, a, input) {cursor: none;}
+// /*cursor hover styles*/
+// .cursor_innner.is-hover .cursor_dot {width: 12px; height: 12px;}
+// .cursor_outer.is-hover .cursor_circle {width: 24px; height: 24px;}
+// /* Cursor - No pointer events */
+// .cursor_component { pointer-events: none; }
+//  /* Cursor - Hide on touch screens */
+// @media (pointer: coarse) {
+//   .cursor_component {display: none;}
+// }
+// @media (pointer: fine) {
+//   .cursor_component {display: block;}
+// }
 
 export const cursor = function (gsapContext) {
   //animation ID
@@ -45,12 +54,12 @@ export const cursor = function (gsapContext) {
 
   const cursorHover = function () {
     // get all links without a no-hover attribute and any other elements with a hover attribute into an array
-    const hoverElements = gsap.utils.toArray(`${HOVER}, :is(a, button):not(${NO_HOVER})`);
+    const hoverElements = gsap.utils.toArray(`${HOVER}, :is(a, button, input):not(${NO_HOVER})`);
     hoverElements.forEach((item) => {
       if (!item || !cursorInner) return;
       item.addEventListener('mouseover', function (e) {
         cursorInner.classList.add(HOVER_CLASS);
-        // cursorOuter.classList.add(HOVER_CLASS);
+        cursorOuter.classList.add(HOVER_CLASS);
 
         //optional add on if you want text in the cursor
         // gsap.to('.cursor_text', {
@@ -64,7 +73,7 @@ export const cursor = function (gsapContext) {
       });
       item.addEventListener('mouseleave', function (e) {
         cursorInner.classList.remove(HOVER_CLASS);
-        // cursorOuter.classList.remove(HOVER_CLASS);
+        cursorOuter.classList.remove(HOVER_CLASS);
       });
     });
   };
