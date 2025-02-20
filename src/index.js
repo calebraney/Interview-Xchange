@@ -1,5 +1,10 @@
 import { attr } from './utilities';
 import { hoverActive } from './interactions/hover-active';
+import { horizontal } from './interactions/horizontal';
+import { cursor } from './interactions/cursor';
+import { load } from './interactions/load';
+import { initLenis } from './interactions/lenis';
+
 import { scrollIn } from './interactions/scroll-in';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -15,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //////////////////////////////
   //Global Variables
+  let lenis;
 
   //////////////////////////////
   //Control Functions on page load
@@ -31,7 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
       (gsapContext) => {
         let { isMobile, isTablet, isDesktop, reduceMotion } = gsapContext.conditions;
         //functional interactions
+        lenis = initLenis();
+
         hoverActive(gsapContext);
+        horizontal(gsapContext);
+        cursor(gsapContext);
+        load(gsapContext);
         //conditional interactions
         if (!reduceMotion) {
           scrollIn(gsapContext);
